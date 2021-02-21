@@ -12,4 +12,7 @@ class Article extends Model
     // {
     //     return 'slug'; // Article::where('slug', $foobar)->first();
     // }
+
+    protected $fillable = ['title', 'excerpt', 'body']; 
+    // protected $guarded = []; // Don't guard masses fillable.
 }

@@ -30,19 +30,27 @@ class ArticlesController extends Controller
       //dump(request()->all());
 
       // validation
-      request()->validate([
-        'title' => 'required',
-        'excerpt' => 'required',
-        'body' => 'required'
-      ]);
-      //clean up
-      $article = new Article();
-      $article->title = request('title');
-      $article->excerpt = request('excerpt');
-      $article->body = request('body');
-
-      $article->save();
-
+      // $validatedAttributes = request()->validate([
+      //   'title' => 'required',
+      //   'excerpt' => 'required',
+      //   'body' => 'required'
+      // ]);
+      // return $validatedAttributes; // the result is similar to what
+      // is needed inside Article::create argument.
+      ///
+      // clean up
+      // $article = new Article();
+      // $article->title = request('title');
+      // $article->excerpt = request('excerpt');
+      // $article->body = request('body');
+      // $article->save();
+      
+      // Article::create([
+      //   'title' => request('title'),
+      //   'excerpt' => request('excerpt'),
+      //   'body' => request('body')
+      // ]);
+      Article::create($this->validateArticle());
       return redirect('/articles');
       
     }
@@ -55,19 +63,24 @@ class ArticlesController extends Controller
 
     public function update(Article $article) {
       // Persist the edited resource.
-      request()->validate([
+
+      $article->update($this->validateArticle());
+
+      // $article->title = request('title');
+      // $article->excerpt = request('excerpt');
+      // $article->body = request('body');
+
+      // $article->save();
+
+      return redirect('/articles/' . $article->id);
+    }
+
+    protected function validateArticle() {
+      return request()->validate([
         'title' => 'required',
         'excerpt' => 'required',
         'body' => 'required'
       ]);
-
-      $article->title = request('title');
-      $article->excerpt = request('excerpt');
-      $article->body = request('body');
-
-      $article->save();
-
-      return redirect('/articles/' . $article->id);
     }
 
     public function destroy() {
