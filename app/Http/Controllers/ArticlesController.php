@@ -11,10 +11,13 @@ class ArticlesController extends Controller
       return view('articles.index', ['articles' => Article::latest()->get()]);
     }
 
-    public function show($id) {
+    public function show(Article $foobar) {
       // Show a single resource.
-      $article = Article::find($id);
-      return view('articles.show', ['article' => $article]);
+      // $article = Article::findOrFail($id);
+      // behind the scene of using model variable
+      // Article::where('id', thepassedId)->first();
+      //return $article;
+      return view('articles.show', ['article' => $foobar]);
     }
 
     public function create() {
@@ -44,21 +47,19 @@ class ArticlesController extends Controller
       
     }
 
-    public function edit($id) {
+    public function edit(Article $article) {
       // Show a view to edit an existing resource.
       // find the article associated with the id.
-      $article = Article::find($id);
       return view('articles.edit', compact('article'));
     }
 
-    public function update($id) {
+    public function update(Article $article) {
       // Persist the edited resource.
       request()->validate([
         'title' => 'required',
         'excerpt' => 'required',
         'body' => 'required'
       ]);
-      $article = Article::find($id);
 
       $article->title = request('title');
       $article->excerpt = request('excerpt');
