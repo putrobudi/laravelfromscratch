@@ -23,4 +23,9 @@ class Article extends Model
         //return '/articles/' . $this->id;
         return route('articles.show', $this);
     }
+    public function user() {
+      
+    }
 }
+
+// $article->user
