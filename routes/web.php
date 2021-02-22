@@ -31,14 +31,26 @@ Route::get('/about', function () {
     ]);
 });
 
-Route::get('/articles', [ArticlesController::class, 'index']);
+Route::get('/articles', [ArticlesController::class, 'index'])->name('articles.index');
 Route::get('/articles/create', [ArticlesController::class, 'create']);
 Route::post('/articles', [ArticlesController::class, 'store']);
-Route::get('/articles/{foobar}', [ArticlesController::class, 'show']);
+Route::get('/articles/{foobar}', [ArticlesController::class, 'show'])->name('articles.show');
 Route::get('/articles/{article}/edit', [ArticlesController::class, 'edit']);
 Route::put('/articles/{article}', [ArticlesController::class, 'update']);
 
 Route::get('/articles/{article}/edit', [ArticlesController::class, 'edit']);
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
+Route::get('test', function () {
+    // return view('test', ['name' => 'Putro']);
+    return var_dump(request('name'));
+});
+
+Route::get('/posts/{post}', [PostsController::class, 'show']);
+
 
 // GET /articles
 // GET /articles/:id
@@ -56,14 +68,3 @@ Route::get('/articles/{article}/edit', [ArticlesController::class, 'edit']);
 
 // GET /videos/subscribe
 // POST /videos/subscriptions => VideoSubscriptionsController@store
-
-Route::get('/contact', function () {
-    return view('contact');
-});
-
-Route::get('test', function() {
-    // return view('test', ['name' => 'Putro']);
-    return var_dump(request('name'));
-});
-
-Route::get('/posts/{post}', [PostsController::class, 'show']);

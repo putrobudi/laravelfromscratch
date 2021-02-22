@@ -14,65 +14,39 @@ class ArticlesController extends Controller
     public function show(Article $foobar) {
       // Show a single resource.
       // $article = Article::findOrFail($id);
-      // behind the scene of using model variable
+      // behind the scene of using model variable -> it automatically looks for primary key id.
+      // if you don't want to use primary key as an id but different column, then define getRouteKeyName
+      // in Article Model.
       // Article::where('id', thepassedId)->first();
       //return $article;
       return view('articles.show', ['article' => $foobar]);
     }
 
     public function create() {
-      // Shows a view to create a new resource.
       return view('articles.create');
     }
 
     public function store() {
-      //persist the new article
-      //dump(request()->all());
-
-      // validation
-      // $validatedAttributes = request()->validate([
-      //   'title' => 'required',
-      //   'excerpt' => 'required',
-      //   'body' => 'required'
-      // ]);
-      // return $validatedAttributes; // the result is similar to what
-      // is needed inside Article::create argument.
-      ///
-      // clean up
-      // $article = new Article();
-      // $article->title = request('title');
-      // $article->excerpt = request('excerpt');
-      // $article->body = request('body');
-      // $article->save();
-      
-      // Article::create([
-      //   'title' => request('title'),
-      //   'excerpt' => request('excerpt'),
-      //   'body' => request('body')
-      // ]);
       Article::create($this->validateArticle());
-      return redirect('/articles');
-      
+      // return redirect('/articles');
+      return redirect(route('articles.index'));
     }
 
     public function edit(Article $article) {
-      // Show a view to edit an existing resource.
-      // find the article associated with the id.
       return view('articles.edit', compact('article'));
     }
 
     public function update(Article $article) {
-      // Persist the edited resource.
 
       $article->update($this->validateArticle());
 
-      // $article->title = request('title');
-      // $article->excerpt = request('excerpt');
-      // $article->body = request('body');
-
-      // $article->save();
-
-      return redirect('/articles/' . $article->id);
+      // Notice how we still need to specify $article->id?
+      // That's because it only works on named route and model binding.
+      // return redirect('/articles/' . $article->id);
+      // So here also applies how Laravel knows which key to use.
+      // In this case it's id because it's set on Article Model.
+      //return redirect(route('articles.show', $article));
+      return redirect($article->path());
     }
 
     protected function validateArticle() {

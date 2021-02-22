@@ -13,6 +13,14 @@ class Article extends Model
     //     return 'slug'; // Article::where('slug', $foobar)->first();
     // }
 
-    protected $fillable = ['title', 'excerpt', 'body']; 
+    protected $fillable = ['title', 'excerpt', 'body'];
     // protected $guarded = []; // Don't guard masses fillable.
+    public function path()
+    {
+        // Automatically knowing which key to use only works in named route
+        // And model binding. Not if you define unnamed routes.
+        // If using unnamed route, then, you would construct like this:
+        //return '/articles/' . $this->id;
+        return route('articles.show', $this);
+    }
 }
