@@ -23,8 +23,9 @@ class Article extends Model
         //return '/articles/' . $this->id;
         return route('articles.show', $this);
     }
-    public function user() {
-      
+    public function author() {
+    //   return $this->belongsTo(User::class); // Laravel assumes the foreign key is user_id.
+      return $this->belongsTo(User::class, 'user_id'); // So if we change the method name, then we need to specify the foreign key.
     }
 }
 
