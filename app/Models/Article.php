@@ -27,6 +27,20 @@ class Article extends Model
     //   return $this->belongsTo(User::class); // Laravel assumes the foreign key is user_id.
       return $this->belongsTo(User::class, 'user_id'); // So if we change the method name, then we need to specify the foreign key.
     }
+
+    public function tags() {
+      return $this->belongsToMany(Tag::class);
+    }
+
+
 }
 
 // $article->user
+
+ // an article has many tags
+ // tag belongs to an article?
+
+ // Learn Laravel
+ // php, laravel, work, education
+
+// So an article can have many tags. And a single tag can have many articles. -> Many to Many
