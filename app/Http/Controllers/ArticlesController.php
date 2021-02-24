@@ -3,12 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Tag;
 
 class ArticlesController extends Controller
 {
     // Renders a list of resource.
     public function index() {
-      return view('articles.index', ['articles' => Article::latest()->get()]);
+      if (request('tag')) {
+        // To list only articles with the specified tag.
+        $articles = Tag::where('name', request('tag'))->firstOrFail()->articles;
+      } else {
+        // To list all articles.
+        $articles = Article::latest()->get();
+      }
+      return view('articles.index', ['articles' => $articles]);
     }
 
     public function show(Article $foobar) {
