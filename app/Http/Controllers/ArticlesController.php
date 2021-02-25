@@ -31,11 +31,24 @@ class ArticlesController extends Controller
     }
 
     public function create() {
-      return view('articles.create');
+      return view('articles.create', [
+        'tags' => Tag::all()
+      ]);
     }
 
     public function store() {
-      Article::create($this->validateArticle());
+      //dd(request()->all());
+      // Article::create($this->validateArticle());
+      $this->validateArticle(); // seperate the validation because of tags relationship.
+      // $article = new Article($this->validateArticle());
+      $article = new Article(request(['title', 'excerpt', 'body']));
+      $article->user_id = 1; // auth()->id()
+      $article->save();
+      /* 
+        if (request('tags')) or if (request()->has('tags)) only on that condition we proceed attaching.
+        But below works because if you attach(null) then, it won't work.
+      */
+      $article->tags()->attach(request('tags')); // [1,2,3] we're going to attach those id into the table.
       // return redirect('/articles');
       return redirect(route('articles.index'));
     }
@@ -61,7 +74,8 @@ class ArticlesController extends Controller
       return request()->validate([
         'title' => 'required',
         'excerpt' => 'required',
-        'body' => 'required'
+        'body' => 'required',
+        'tags' => 'exists:tags,id' // if tags exists in the tags table particularly the id.
       ]);
     }
 

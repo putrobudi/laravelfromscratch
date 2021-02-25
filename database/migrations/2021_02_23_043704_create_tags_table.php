@@ -32,6 +32,8 @@ class CreateTagsTable extends Migration
             $table->unique(['article_id', 'tag_id']); // So the combination of article_id and tag_id has to be unique.
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
+            // whenever an article or tag is deleted, the corresponding record in pivot table will 
+            // also get deleted.
         });
     }
 

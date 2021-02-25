@@ -13,7 +13,7 @@ class Article extends Model
     //     return 'slug'; // Article::where('slug', $foobar)->first();
     // }
 
-    protected $fillable = ['title', 'excerpt', 'body'];
+    protected $fillable = ['title', 'excerpt', 'body', 'tags'];
     // protected $guarded = []; // Don't guard masses fillable.
     public function path()
     {
@@ -29,7 +29,10 @@ class Article extends Model
     }
 
     public function tags() {
-      return $this->belongsToMany(Tag::class);
+      return $this->belongsToMany(Tag::class)->withTimestamps(); // Maybe because this relationship is mappped in pivot table.
+      // so by default it assumes you have no timestamp when attaching.;
+      // And why is the timestamp defined here? Not on Tag.php instead? Because the creation of pivot record is 
+      // triggered when we're storing new article. That's why we attach the tag to the article.
     }
 
 
