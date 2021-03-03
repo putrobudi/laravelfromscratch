@@ -19,6 +19,19 @@ use App\Models\Article;
 Route::get('/', function () {
     return view('welcome');
 });
+// Route::get('/', function () {
+
+//     // this logic should be written in Service Provider.
+//     $container = new \App\Models\Container();
+//     $container->bind('example', function () {
+//         return new \App\Models\Example();
+//     });
+
+//     $example = $container->resolve('example');
+
+//     // ddd($example);
+//     $example->go();
+// });
 
 Route::get('/about', function () {
     //$articles = App\Models\Article::latest(/* 'timestamp', 'updated_at' your choice */)->get(); // order by created_at desc
