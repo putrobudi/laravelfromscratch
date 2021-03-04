@@ -3,22 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\Example;
+use App\Http\Controllers\PagesController;
 use App\Models\Article;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/* From service provider fundamentals */
 // Route::get('/', function () {
 
 //     // this logic should be written in Service Provider.
@@ -33,6 +23,56 @@ Route::get('/', function () {
 //     $example->go();
 // });
 
+/* End from Service Provider Fundamentals */
+
+/* From Automatically Resolve Dependencies */
+/* Version 1 */
+// app()->bind('example', function () {
+//     $foo = config('services.foo'); // find this inside config dir
+//     return new \App\Models\Example($foo); // read the config file
+// });
+
+// Route::get('/', function () {
+//     $example = resolve('example');
+//     ddd($example);
+// });
+
+/* Version 2 */
+// when we omit this, the resolve function that doesn't contain key below still works.
+// app()->bind('example', function () {
+//     return new \App\Models\Example();
+// });
+
+// Route::get('/', function () {
+//     // $example = resolve('example');
+//     // $example = app()->make(App\Models\Example::class); // You could also write resolve this way.
+//     $example = resolve(App\Models\Example::class); // Laravel checks if there's an existing class to resolve.
+
+//     ddd($example);
+// });
+
+/* Version 3 */
+// This also works like version 2.
+// This is called Automatic Resolution, if Laravel can do it.
+// Route::get('/', function (App\Models\Example $example) {
+//     ddd($example);
+// });
+
+// Using controller instead of route closure.
+//Route::get('/', 'App\Http\Controllers\PagesController@home');
+
+/* Version 4 when Laravel doesn't know what $foo is inside Example constructor. */
+// You need to explicitly tell Laravel
+// Then we move this into AppServiceProvider.php to register it.
+// app()->bind('App\Models\Example', function () {
+//     $collaborator = new \App\Models\Collaborator();
+//     $foo = 'foobar';
+
+//     return new \App\Models\Example($collaborator, $foo);
+// });
+Route::get('/', [PagesController::class, 'home']);
+
+
 Route::get('/about', function () {
     //$articles = App\Models\Article::latest(/* 'timestamp', 'updated_at' your choice */)->get(); // order by created_at desc
     //$articles = App\Models\Article::all();
@@ -40,7 +80,7 @@ Route::get('/about', function () {
     //$articles = App\Models\Article::paginate(2);
     //return $articles;
     return view('about', [
-        'articles' => App\Models\Article::take(3)->latest()->get()
+        'articles' => Article::take(3)->latest()->get()
     ]);
 });
 
