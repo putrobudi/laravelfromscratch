@@ -19,7 +19,9 @@ Released   : 20140225
   <meta name="description" content="" />
   <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
   {{-- relative path breaks when extending nested view. Use absolute path
-    by giving forward slash in your href that directs to public folder. --}}
+    by giving forward slash in your href that directs to public folder.
+    Source: Render Dynamic Data: Part 2 -> 02:34
+    Basically it's a public route if you put forward slash at the front. --}}
   <link href="/css/default.css" rel="stylesheet" type="text/css" />
   <link href="/css/fonts.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="/css/app.css">

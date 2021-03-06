@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ArticlesController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Models\Article;
 
@@ -92,9 +93,12 @@ Route::put('/articles/{article}', [ArticlesController::class, 'update']);
 
 Route::get('/articles/{article}/edit', [ArticlesController::class, 'edit']);
 
-Route::get('/contact', function () {
-    return view('contact');
-});
+// Route::get('/contact', function () {
+//     return view('contact');
+// });
+
+Route::get('/contact', [ContactController::class, 'show']);
+Route::post('/contact', [ContactController::class, 'store']);
 
 Route::get('test', function () {
     // return view('test', ['name' => 'Putro']);
