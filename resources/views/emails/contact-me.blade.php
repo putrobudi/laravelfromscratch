@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-</head>
-<body>
-  <h1>It works again!</h1>
+@component('mail::message')
+# A Heading
 
-  <p>Its sounds like you want to hear more about {{ $topic }}.</p>
-</body>
-</html>
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure officiis atque fuga mollitia quis quaerat laudantium ab consectetur id alias.
+
+- A list 
+- goes
+- here
+
+Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab neque delectus esse sunt cumque iste accusantium cupiditate, tempore commodi! Est.
+
+{{-- @component is just like loading a view but by default it's in vendor mail resource directory. --}}
+@component('mail::button', ['url' => 'https://laravelfromscratch.com'])
+Visit Laravel From Scratch
+@endcomponent
+@endcomponent

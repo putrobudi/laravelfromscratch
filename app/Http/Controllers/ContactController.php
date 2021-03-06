@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Contact;
 use App\Mail\ContactMe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -26,7 +27,8 @@ class ContactController extends Controller
 
       // send html email
       // Mail::to(request('email'))->send(new ContactMe);
-      Mail::to(request('email'))->send(new ContactMe(/* usually this is a result of database query or from a form. */ 'shirts'));
+      // Mail::to(request('email'))->send(new ContactMe(/* usually this is a result of database query or from a form. */ 'shirts'));
+      Mail::to(request('email'))->send(new Contact());
 
 
       // flash message = a data that's passed into a session for exactly one request.
