@@ -25,8 +25,12 @@ class ArticlesController extends Controller
       // behind the scene of using model variable -> it automatically looks for primary key id.
       // if you don't want to use primary key as an id but different column, then define getRouteKeyName
       // in Article Model.
+      // /* quick note: don't get confused between stating the primary id key column name and specifying different column as an id.
+      // Stating the primary id key column will still make laravel look the id inside the primary key column
+      // For example as laravel automatically look for id column as primary key column, you want to tell laravel that column in my database
+      // is flight_id.  */
       // Article::where('id', thepassedId)->first();
-      //return $article;
+      // return $article;
       return view('articles.show', ['article' => $foobar]);
     }
 
