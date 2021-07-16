@@ -1,12 +1,33 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PostsController;
 use App\Models\Article;
+use App\Models\Documentation\ExternalApiHelper;
+use Illuminate\Support\Facades\Route;
 
+Route::get('/statickeyword', function () {
+
+    // $apiHelper = new ExternalApiHelper('Hello world!');
+    // return $apiHelper->foo();
+
+    // return ExternalApiHelper::foo(); We want the above to be like this. So first, let's make it like this.
+    // return app(ExternalApiHelper::class)->foo(); // there's no difference between app(), app()->make(), and resolve()
+
+    // then make static function in our ExternalApiHelper called bar
+    // return ExternalApiHelper::bar();
+
+    // now let's try setting foo with setFoo()
+    $externalApi = ExternalApiHelper::setFoo('Hello, foo!');
+    $externalApiAgain = ExternalApiHelper::setFoo('Hello, foo again!');
+
+    // you can see here that with singleton we're actually setting foo on the same object. That's why,
+    // $externalApi returns 'Hello, foo again!'.
+    return $externalApi->foo() . ' - ' . $externalApiAgain->foo();
+
+});
 
 /* From service provider fundamentals */
 // Route::get('/', function () {
@@ -72,7 +93,6 @@ use App\Models\Article;
 // });
 Route::get('/', [PagesController::class, 'home']);
 
-
 Route::get('/about', function () {
     //$articles = App\Models\Article::latest(/* 'timestamp', 'updated_at' your choice */)->get(); // order by created_at desc
     //$articles = App\Models\Article::all();
@@ -80,7 +100,7 @@ Route::get('/about', function () {
     //$articles = App\Models\Article::paginate(2);
     //return $articles;
     return view('about', [
-        'articles' => Article::take(3)->latest()->get()
+        'articles' => Article::take(3)->latest()->get(),
     ]);
 });
 
@@ -106,7 +126,6 @@ Route::get('test', function () {
 });
 
 Route::get('/posts/{post}', [PostsController::class, 'show']);
-
 
 // GET /articles
 // GET /articles/:id

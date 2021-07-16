@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Collaborator;
+use App\Models\Documentation\ExternalApiHelper;
 use App\Models\Example;
-
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,11 +17,11 @@ class AppServiceProvider extends ServiceProvider
     {
         // app()->bind('App\Models\Example', function () { write app() or $this-app
         // $this->app->bind('App\Models\Example', function () {
-        // Note: why not bind('example') why bind(class) ? It's the same thing. With example, the key is shorter. 
+        // Note: why not bind('example') why bind(class) ? It's the same thing. With example, the key is shorter.
         // $this->app->singleton('App\Models\Example', function () { // singleton (return same instance everytime)
         //     $collaborator = new Collaborator();
         //     $foo = 'foobar';
-        
+
         //     return new Example($collaborator, $foo);
         // });
 
@@ -35,6 +34,10 @@ class AppServiceProvider extends ServiceProvider
         // Here is for telling Laravel what $apiKey is inside Example Constructor.
         $this->app->bind(Example::class, function () {
             return new Example('api-key-here');
+        });
+
+        $this->app->singleton(ExternalApiHelper::class, function () {
+            return new ExternalApiHelper('Hello app!');
         });
     }
 
