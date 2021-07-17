@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\UsersController;
 use App\Models\Article;
 use App\Models\Documentation\ExternalApiHelper;
 use Illuminate\Support\Facades\Route;
@@ -23,11 +24,11 @@ Route::get('/statickeyword', function () {
     $externalApi = ExternalApiHelper::setFoo('Hello, foo!');
     $externalApiAgain = ExternalApiHelper::setFoo('Hello, foo again!');
 
-    // you can see here that with singleton we're actually setting foo on the same object. That's why,
-    // $externalApi returns 'Hello, foo again!'.
     return $externalApi->foo() . ' - ' . $externalApiAgain->foo();
 
 });
+
+Route::get('/user', [UsersController::class, 'show']);
 
 /* From service provider fundamentals */
 // Route::get('/', function () {
