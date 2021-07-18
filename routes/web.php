@@ -4,6 +4,7 @@ use App\Http\Controllers\ArticlesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\UsersController2;
 use App\Http\Controllers\UsersController;
 use App\Models\Article;
 use App\Models\Documentation\ExternalApiHelper;
@@ -28,7 +29,8 @@ Route::get('/statickeyword', function () {
 
 });
 
-Route::get('/user', [UsersController::class, 'show']);
+Route::get('/user/{username}', [UsersController::class, 'show']);
+Route::get('/user2/{username}', [UsersController2::class, 'show']);
 
 /* From service provider fundamentals */
 // Route::get('/', function () {

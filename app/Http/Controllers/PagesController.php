@@ -51,7 +51,7 @@ class PagesController extends Controller
         // experience. So for example, laracasts always uses view helper function whether it's facade or the helper function.
         // Same with redirect or Redirect facade. It all just depends on the scope of your project, the convention
         // you're following, and where in this stack you're referencing these classes.
-        // E.g on a model level, if I have an eloquent model I'd probably not reaching for the Auth facade, or Request
+        // E.g on a model level, if I have an eloquen;t model I'd probably not reaching for the Auth facade, or Request
         // facade. Maybe I like referencing the File facade when I need to do quick read from an artisan commands, but if I
         // build a package, I would instead inject it. These are all things that come from experience.
     }

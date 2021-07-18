@@ -19,9 +19,9 @@ class CreateTagsTable extends Migration
             $table->timestamps();
         });
         // We need to create a linking table where we create the association for
-        // Many to Many Relationships. You can create this here or 
+        // Many to Many Relationships. You can create this here or
         // create another migration table.
-        
+
         // article_tag (convention for pivot table of two related tables. Alphabetical, underscore, singular.)
         Schema::create('article_tag', function (Blueprint $table) {
             $table->id();
@@ -32,7 +32,7 @@ class CreateTagsTable extends Migration
             $table->unique(['article_id', 'tag_id']); // So the combination of article_id and tag_id has to be unique.
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
             $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
-            // whenever an article or tag is deleted, the corresponding record in pivot table will 
+            // whenever an article or tag is deleted, the corresponding record in pivot table will
             // also get deleted.
         });
     }
@@ -44,6 +44,7 @@ class CreateTagsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('article_tag');
         Schema::dropIfExists('tags');
     }
 }
