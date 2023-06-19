@@ -8,7 +8,7 @@ use Illuminate\Database\QueryException;
 
 class UsersController extends Controller
 {
-
+    // this here is from laravel daily exception video.
     public function show($username)
     {
 
